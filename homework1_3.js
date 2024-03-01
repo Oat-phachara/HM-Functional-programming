@@ -793,18 +793,30 @@ const allFriends = [
     favoriteFruit: "apple",
   },
 ];
+const tableBody = document.getElementById("userTableBody");
+let number = 1;
 
-console.log(
-  allFriends
-    .filter((obj) => obj.gender === "male" && obj.friends.length >= 2)
-    .map((obj) => {
-      return {
-        name: obj.name,
-        gender: obj.gender,
-        company: obj.company,
-        email: obj.email,
-        friends: obj.friends.map((obj) => obj.name),
-        balance: "$" + parseFloat(obj.balance.replace(/[^\d.]/g, "")) / 10,
-      };
-    })
-);
+const allfriendFilter = allFriends
+  .filter((obj) => obj.gender === "male" && obj.friends.length >= 2)
+  .map((obj) => {
+    return {
+      name: obj.name,
+      gender: obj.gender,
+      company: obj.company,
+      email: obj.email,
+      friends: obj.friends.map((obj) => obj.name),
+      balance: "$" + parseFloat(obj.balance.replace(/[^\d.]/g, "")) / 10,
+    };
+  });
+
+allfriendFilter.forEach((user) => {
+  const row = tableBody.insertRow();
+  row.insertCell(0).textContent = number++;
+  row.insertCell(1).textContent = user.name;
+  row.insertCell(2).textContent = user.gender;
+  row.insertCell(3).textContent = user.company;
+  row.insertCell(4).textContent = user.email;
+  row.insertCell(5).textContent = user.friends.join(", ");
+  row.insertCell(6).textContent = user.balance;
+});
+console.log(allfriendFilter);
